@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
 using System.Collections;
-public class EventsManager
+
+public class EventsManager : MonoBehaviour
 {
     public static EventsManager current;
 
@@ -34,12 +35,12 @@ public class EventsManager
 
     //----------------------------------------------------
 
-    public event Action<Hashtable, Action> onConfirmationPopupAction;
-    public void confirmationPopupAction(Hashtable parameters, Action callback)
+    public event Action<Hashtable> onConfirmationPopupAction;
+    public void confirmationPopupAction(Hashtable parameters)
     {
         if (onConfirmationPopupAction != null)
         {
-            onConfirmationPopupAction(parameters, callback);
+            onConfirmationPopupAction(parameters);
         }
     }
 
@@ -67,14 +68,67 @@ public class EventsManager
 
     //----------------------------------------------------
 
-    public event Action<float> onMusicVolumeAction;
-    public void musicVolumeAction(float parameter)
+    public event Action<float> onChangeMusicVolumeAction;
+    public void changeMusicVolumeAction(float parameter)
     {
-        if (onMusicVolumeAction != null)
+        if (onChangeMusicVolumeAction != null)
         {
-            musicVolumeAction(parameter);
+            onChangeMusicVolumeAction(parameter);
         }
     }
 
+    //----------------------------------------------------
 
+    public event Action<float> onChangeFxVolumeAction;
+    public void changeFxVolumeAction(float parameter)
+    {
+        if (onChangeFxVolumeAction != null)
+        {
+            onChangeFxVolumeAction(parameter);
+        }
+    }
+
+    //----------------------------------------------------
+
+    public event Action<Action> onChangeLevelAction;
+    public void changeLevelAction(Action parameter)
+    {
+        if (onChangeLevelAction != null)
+        {
+            onChangeLevelAction(parameter);
+        }
+    }
+
+    //----------------------------------------------------
+
+    public event Action<GameObject> onSelectAnswerAction;
+    public void selectAnswerAction(GameObject parameter)
+    {
+        if (onSelectAnswerAction != null)
+        {
+            onSelectAnswerAction(parameter);
+        }
+    }
+
+    //----------------------------------------------------
+
+    public event Action<bool> onGameLostAction;
+    public void gameLostAction(bool parameter)
+    {
+        if (onGameLostAction != null)
+        {
+            onGameLostAction(parameter);
+        }
+    }
+
+    //----------------------------------------------------
+
+    public event Action<bool, bool> onChangeTimerAction;
+    public void changeTimerAction(bool parameter, bool refresh)
+    {
+        if (onChangeTimerAction != null)
+        {
+            onChangeTimerAction(parameter, refresh);
+        }
+    }
 }

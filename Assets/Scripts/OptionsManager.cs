@@ -1,20 +1,40 @@
 using DG.Tweening;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class OptionsManager : MonoBehaviour
 {
+    DatabaseManager databaseManager;
+    Slider musicSlider;
+    Slider effectsSlider;
+
     // Start is called before the first frame update
     void Start()
     {
         EventsManager.current.onOptionsPopupAction += popup;
-        EventsManager.current.onMusicVolumeAction += musicVolume;
+        EventsManager.current.onChangeMusicVolumeAction += musicVolume;
+        EventsManager.current.onChangeFxVolumeAction += fxVolume;
+
+        databaseManager = DatabaseManager.manager;
+
+        musicSlider = GameObject.Find("MusicSlider").GetComponent<Slider>();
+        effectsSlider = GameObject.Find("EffectsSlider").GetComponent<Slider>();
+    }
+
+    void setSoundVolumeOnLoad()
+    {
+        GameDataConfig gameDataConfig = databaseManager.LoadSaving();
+        
+        musicSlider.value = gameDataConfig.musicVolume;
+        effectsSlider.value = gameDataConfig.effectsVolume;
     }
 
     public void popup(Hashtable parameters, Action callback) 
     {
         if((bool)parameters["opened"]) {
+            setSoundVolumeOnLoad();
             gameObject.SetActive(true);
             gameObject.transform
                       .DOScale(new Vector3(1, 1, 1), parameters["time"] != null ? (float)parameters["time"] : 0.2f)
@@ -27,21 +47,21 @@ public class OptionsManager : MonoBehaviour
 
     public void musicVolume(float parameter)
     {
-        Debug.Log("parameter");
-        Debug.Log(parameter);
-        // config.musicLevel = musicSlider.value;
+        GameDataConfig gameDataConfig = databaseManager.LoadSaving();
+
+        gameDataConfig.musicVolume = parameter;
 
         // audioManager.MusicVolumeControl(musicSlider.value / 3);
 
-        // DBOperationsController.element.CreateSaving(config);
+        databaseManager.CreateSaving(gameDataConfig);
     }
 
-    public void fxValueChange()
+    public void fxVolume(float parameter)
     {
-        // config.effectsLevel = effectsSlider.value;
+        GameDataConfig gameDataConfig = DatabaseManager.manager.LoadSaving();
+        
+        gameDataConfig.effectsVolume = parameter;
 
-        // audioManager.EffectsVolumeControl(effectsSlider.value / 3);
-
-        // DBOperationsController.element.CreateSaving(config);
+        databaseManager.CreateSaving(gameDataConfig);
     }
 }

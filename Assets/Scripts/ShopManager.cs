@@ -10,6 +10,10 @@ public class ShopManager : MonoBehaviour
     void Start()
     {
         EventsManager.current.onShopPopupAction += popup;
+
+        GameDataConfig gameDataConfig = DatabaseManager.manager.LoadSaving();
+
+        gameObject.transform.Find("Title/Score").GetComponent<TextMeshProUGUI>().text = (gameDataConfig.score).ToString();
     }
 
     public void popup(Hashtable parameters, Action callback) 
