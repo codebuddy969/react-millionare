@@ -5,71 +5,118 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class PopupsManager : MonoBehaviour
 {
     EventsManager eventsManager;
-    public GameObject gameLostPopup, preloaderPopup, confirmationPopup;
-    Image gameLostPopupCircle, preloaderPopupCircle;
+    PopupsEvents popupsEvents;
+    DatabaseManager databaseManager;
 
+    public PopupsList[] popupsList;
+ 
     void Start()
     {
         eventsManager = EventsManager.current;
+        popupsEvents = EventsManager.popupsEvents;
+        databaseManager = DatabaseManager.manager;
 
-        eventsManager.onGameLostAction += gameLost;
-        eventsManager.onChangeLevelAction += changeLevel;
-        eventsManager.onConfirmationPopupAction += leaveGame;
-
-        gameLostPopupCircle = gameLostPopup.transform.Find("Popup/Icon/Circle").GetComponent<Image>();
-        preloaderPopupCircle = preloaderPopup.transform.Find("Icon/Circle").GetComponent<Image>();
+        foreach (PopupsList popup in popupsList)
+        {
+            switch (popup.Name)
+            {
+                case "Options":
+                    popupsEvents.onOptionsPopupAction += (p) => onOptionsOpen(p, popup.Element);
+                    break;
+                case "Shop":
+                    popupsEvents.onShopPopupAction += (p) => onShopOpen(p, popup.Element);
+                    break;
+                case "Confirmation":
+                    //popupsEvents.onConfirmationPopupAction += (p) => onConfirmationOpen(p);
+                    break;
+                case "Game Lost":
+                    //popupsEvents.onGameLostAction += (p) => onGameLost(p);
+                    break;
+                case "Level Change":
+                    //popupsEvents.onChangeLevelAction += (p) => onChangeLevel(p);
+                    break;
+            }
+        }
     }
 
-    void gameLost(bool status)
+    void onGameLost(bool status, GameObject element)
     {
-        if(status) {
-            gameLostPopup.SetActive(true);
-            gameLostPopup.transform
-                         .DOScale(new Vector3(1, 1, 1), 0.2f)
-                         .SetEase(Ease.OutBack)
-                         .OnComplete(() => {
-                            StartCoroutine(CircleFill(gameLostPopupCircle, 300, () => { SceneManager.LoadScene("Menu"); }));
-                         });
+        Image circle = popupsList[0].Element.transform.Find("Popup/Icon/Circle").GetComponent<Image>(); 
+
+        if (status) {
+            popupsList[0].Element.SetActive(true);
+            popupsList[0].Element.transform
+                        .DOScale(new Vector3(1, 1, 1), 0.2f)
+                        .SetEase(Ease.OutBack)
+                        .OnComplete(() => {
+                            StartCoroutine(CircleFill(circle, 300, () => { SceneManager.LoadScene("Menu"); }));
+                        });
         } else {
-            gameLostPopup.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { 
-                gameObject.SetActive(false); 
+            popupsList[0].Element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { 
+                popupsList[0].Element.SetActive(false); 
             });
         }
     }
 
-    void changeLevel(Action callback)
+    void onChangeLevel(Action callback)
     {
         GameDataConfig gameDataConfig = DatabaseManager.manager.LoadSaving();
+        Image circle = popupsList[1].Element.transform.Find("Icon/Circle").GetComponent<Image>();
 
-        preloaderPopup.SetActive(true);
-        preloaderPopup.transform
+        popupsList[1].Element.SetActive(true);
+        popupsList[1].Element.transform
                      .DOScale(new Vector3(1, 1, 1), 0.2f)
                      .SetEase(Ease.OutBack)
                      .SetDelay(2)
                      .OnComplete(() => {
-                         StartCoroutine(CircleFill(preloaderPopupCircle, 5, () => {
+                         StartCoroutine(CircleFill(circle, 5, () => {
                              callback?.Invoke();
-                             preloaderPopup.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetDelay(2).OnComplete(() => {
+                             popupsList[1].Element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetDelay(2).OnComplete(() => {
                                 eventsManager.changeTimerAction(true, true);
-                                preloaderPopup.SetActive(false);
+                                popupsList[1].Element.SetActive(false);
                              });
                          }));
                     });
     }
 
-    void leaveGame(Hashtable parameters)
+    void onConfirmationOpen(bool status)
     {
-        if((bool)parameters["opened"]) {
-            confirmationPopup.SetActive(true);
-            confirmationPopup.transform
-                      .DOScale(new Vector3(1, 1, 1), 0.2f)
-                      .SetEase(Ease.OutBack);
+        if (status) {
+            popupsList[2].Element.SetActive(true);
+            popupsList[2].Element.transform
+                         .DOScale(new Vector3(1, 1, 1), 0.2f)
+                         .SetEase(Ease.OutBack);
         } else {
-            confirmationPopup.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { gameObject.SetActive(false); });
+            popupsList[2].Element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { popupsList[2].Element.SetActive(false); });
+        }
+    }
+
+    void onOptionsOpen(bool status, GameObject element)
+    {
+        if (status) {
+            element.SetActive(true);
+            element.transform
+                         .DOScale(new Vector3(1, 1, 1), 0.2f)
+                         .SetEase(Ease.OutBack);
+        } else {
+            element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { element.SetActive(false); });
+        }
+    }
+
+    void onShopOpen(bool status, GameObject element)
+    {
+        if (status) {
+            GameDataConfig gameDataConfig = databaseManager.LoadSaving();
+            element.SetActive(true);
+            element.transform.Find("Title/Score").GetComponent<TextMeshProUGUI>().text = (gameDataConfig.score).ToString();
+            element.transform.DOScale(new Vector3(1, 1, 1), 0.2f).SetEase(Ease.OutBack);
+        } else {
+            element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { element.SetActive(false); });
         }
     }
 

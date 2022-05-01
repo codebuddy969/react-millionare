@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     EventsManager eventsManager;
+    PopupsEvents popupsEvents;
     DatabaseManager databaseManager;
 
     void Start()
     {
         eventsManager = EventsManager.current;
+        popupsEvents = EventsManager.popupsEvents;
         databaseManager = DatabaseManager.manager;
         
         databaseManager.LoadSaving();
@@ -30,20 +32,12 @@ public class MenuManager : MonoBehaviour
 
     public void optionsPopup(bool status)
     {
-        Hashtable parameters = new Hashtable();
-
-        parameters["opened"] = status;
-
-        eventsManager.optionsPopupAction(parameters, () => {  });
+        popupsEvents.optionsPopupAction(status);
     }
 
     public void shopPopup(bool status)
     {
-        Hashtable parameters = new Hashtable();
-
-        parameters["opened"] = status;
-
-        eventsManager.shopPopupAction(parameters, () => { });
+        popupsEvents.shopPopupAction(status);
     }
 
     public void musicVolume(float value)

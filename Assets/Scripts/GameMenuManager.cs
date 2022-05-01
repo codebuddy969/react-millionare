@@ -7,12 +7,14 @@ using UnityEngine.SceneManagement;
 public class GameMenuManager : MonoBehaviour
 {
     EventsManager eventsManager;
+    PopupsEvents popupsEvents;
     DatabaseManager databaseManager;
 
     // Start is called before the first frame update
     void Start()
     {
         eventsManager = EventsManager.current;
+        popupsEvents = EventsManager.popupsEvents;
         databaseManager = DatabaseManager.manager;
     }
 
@@ -46,20 +48,12 @@ public class GameMenuManager : MonoBehaviour
 
     public void optionsPopup(bool status)
     {
-        Hashtable parameters = new Hashtable();
-
-        parameters["opened"] = status;
-
-        eventsManager.optionsPopupAction(parameters, () => {  });
+        popupsEvents.optionsPopupAction(status);
     }
 
     public void confirmationPopup(bool status)
     {
-        Hashtable parameters = new Hashtable();
-
-        parameters["opened"] = status;
-
-        eventsManager.confirmationPopupAction(parameters);
+        popupsEvents.confirmationPopupAction(status);
     }
 
     public void Levels(bool status)
@@ -84,5 +78,10 @@ public class GameMenuManager : MonoBehaviour
     public void selectAnswer(GameObject button)
     {
         eventsManager.selectAnswerAction(button);
+    }
+
+    public void onCluesClick()
+    {
+
     }
 }

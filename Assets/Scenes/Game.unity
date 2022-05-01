@@ -432,7 +432,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: leaveGameSession
         m_Mode: 6
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 424134204}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: optionsPopup
         m_Mode: 6
@@ -1724,7 +1724,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: selectAnswer
         m_Mode: 2
@@ -2084,7 +2084,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: optionsPopup
         m_Mode: 6
@@ -2903,7 +2903,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: fxVolume
         m_Mode: 0
@@ -3172,11 +3172,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 424134201}
-  - component: {fileID: 424134203}
-  - component: {fileID: 424134204}
   - component: {fileID: 424134205}
-  - component: {fileID: 424134206}
-  - component: {fileID: 424134207}
+  - component: {fileID: 424134204}
+  - component: {fileID: 424134203}
+  - component: {fileID: 424134202}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -3199,6 +3198,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &424134202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424134199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e697cc32f8dccbe43a93fe7ae5be5e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupsList:
+  - Name: GameLost
+    Element: {fileID: 1452850360}
+  - Name: Preloader
+    Element: {fileID: 1222859496}
+  - Name: Confirmation
+    Element: {fileID: 129202316}
+  - Name: Options
+    Element: {fileID: 1445275055}
 --- !u!114 &424134203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3220,7 +3240,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 424134199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e3d298cf9931ea4abf186df4a564f10, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f8383bd3be70c14b8aac3615956ccda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &424134205
@@ -3232,52 +3252,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 424134199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f8383bd3be70c14b8aac3615956ccda, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e3d298cf9931ea4abf186df4a564f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &424134206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424134199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3fafc6f9108869499964dc141876096, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questionsFile: {fileID: 4900000, guid: 750af0a14f650d149ad74f85296b6138, type: 3}
-  UITexts:
-  - {fileID: 1399973921}
-  - {fileID: 865325334}
-  - {fileID: 1857400057}
-  - {fileID: 1529230760}
-  - {fileID: 434721444}
-  backgroundSprites:
-  - {fileID: 21300000, guid: df935c9ef2fc1934abe1ff7e106718d1, type: 3}
-  - {fileID: 21300000, guid: d33203a0b900e844d85ba26ec4ee719a, type: 3}
-  - {fileID: 21300000, guid: cf95203c4eb54694e98519d79ac708f1, type: 3}
-  buttons:
-  - {fileID: 1229635751}
-  - {fileID: 1674303997}
-  - {fileID: 1172898643}
-  - {fileID: 183665777}
---- !u!114 &424134207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424134199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e697cc32f8dccbe43a93fe7ae5be5e73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameLostPopup: {fileID: 1452850360}
-  preloaderPopup: {fileID: 1222859496}
-  confirmationPopup: {fileID: 129202316}
 --- !u!1 &427038115
 GameObject:
   m_ObjectHideFlags: 0
@@ -3844,7 +3821,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: confirmationPopup
         m_Mode: 6
@@ -4331,7 +4308,7 @@ GameObject:
   - component: {fileID: 712844473}
   - component: {fileID: 712844472}
   m_Layer: 5
-  m_Name: Options (Button)
+  m_Name: 50on50 (Button)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7229,7 +7206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: selectAnswer
         m_Mode: 2
@@ -8068,7 +8045,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: selectAnswer
         m_Mode: 2
@@ -9527,7 +9504,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: Levels
         m_Mode: 6
@@ -9814,7 +9791,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 424134204}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: Levels
         m_Mode: 6
@@ -10411,7 +10388,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: selectAnswer
         m_Mode: 2
@@ -10667,7 +10644,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: musicVolume
         m_Mode: 0
@@ -10840,7 +10817,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: reloadGameSession
         m_Mode: 1
@@ -11321,7 +11298,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: leaveGameSession
         m_Mode: 6
@@ -11454,7 +11431,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 424134205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
         m_MethodName: confirmationPopup
         m_Mode: 6

@@ -5,44 +5,46 @@ using System.Collections;
 public class EventsManager : MonoBehaviour
 {
     public static EventsManager current;
+    public static PopupsEvents popupsEvents;
 
     private void Awake()
     {
         current = this;
+        popupsEvents = new PopupsEvents();
     }
 
     //----------------------------------------------------
 
-    public event Action<Hashtable, Action> onOptionsPopupAction;
-    public void optionsPopupAction(Hashtable parameters, Action callback)
-    {
-        if (onOptionsPopupAction != null)
-        {
-            onOptionsPopupAction(parameters, callback);
-        }
-    }
+    // public event Action<bool> onOptionsPopupAction;
+    // public void optionsPopupAction(bool parameter)
+    // {
+    //     if (onOptionsPopupAction != null)
+    //     {
+    //         onOptionsPopupAction(parameter);
+    //     }
+    // }
 
     //----------------------------------------------------
 
-    public event Action<Hashtable, Action> onShopPopupAction;
-    public void shopPopupAction(Hashtable parameters, Action callback)
-    {
-        if (onShopPopupAction != null)
-        {
-            onShopPopupAction(parameters, callback);
-        }
-    }
+    // public event Action<Hashtable, Action> onShopPopupAction;
+    // public void shopPopupAction(Hashtable parameters, Action callback)
+    // {
+    //     if (onShopPopupAction != null)
+    //     {
+    //         onShopPopupAction(parameters, callback);
+    //     }
+    // }
 
     //----------------------------------------------------
 
-    public event Action<Hashtable> onConfirmationPopupAction;
-    public void confirmationPopupAction(Hashtable parameters)
-    {
-        if (onConfirmationPopupAction != null)
-        {
-            onConfirmationPopupAction(parameters);
-        }
-    }
+    // public event Action<bool> onConfirmationPopupAction;
+    // public void confirmationPopupAction(bool parameter)
+    // {
+    //     if (onConfirmationPopupAction != null)
+    //     {
+    //         onConfirmationPopupAction(parameter);
+    //     }
+    // }
 
     //----------------------------------------------------
 
@@ -90,14 +92,14 @@ public class EventsManager : MonoBehaviour
 
     //----------------------------------------------------
 
-    public event Action<Action> onChangeLevelAction;
-    public void changeLevelAction(Action parameter)
-    {
-        if (onChangeLevelAction != null)
-        {
-            onChangeLevelAction(parameter);
-        }
-    }
+    // public event Action<Action> onChangeLevelAction;
+    // public void changeLevelAction(Action parameter)
+    // {
+    //     if (onChangeLevelAction != null)
+    //     {
+    //         onChangeLevelAction(parameter);
+    //     }
+    // }
 
     //----------------------------------------------------
 
@@ -112,14 +114,14 @@ public class EventsManager : MonoBehaviour
 
     //----------------------------------------------------
 
-    public event Action<bool> onGameLostAction;
-    public void gameLostAction(bool parameter)
-    {
-        if (onGameLostAction != null)
-        {
-            onGameLostAction(parameter);
-        }
-    }
+    // public event Action<bool> onGameLostAction;
+    // public void gameLostAction(bool parameter)
+    // {
+    //     if (onGameLostAction != null)
+    //     {
+    //         onGameLostAction(parameter);
+    //     }
+    // }
 
     //----------------------------------------------------
 

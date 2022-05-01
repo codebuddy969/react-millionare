@@ -13,7 +13,6 @@ public class OptionsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventsManager.current.onOptionsPopupAction += popup;
         EventsManager.current.onChangeMusicVolumeAction += musicVolume;
         EventsManager.current.onChangeFxVolumeAction += fxVolume;
 

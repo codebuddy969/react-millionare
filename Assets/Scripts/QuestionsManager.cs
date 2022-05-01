@@ -56,6 +56,8 @@ public class QuestionsManager : MonoBehaviour
 
     EventsManager eventsManager;
 
+    PopupsEvents popupsEvents;
+
     DatabaseManager databaseManager;
 
     public TextAsset questionsFile;
@@ -167,13 +169,13 @@ public class QuestionsManager : MonoBehaviour
             button.GetComponent<Image>().sprite = backgroundSprites[i % 2 == 0 ? 1 : 0];
             if (i == 5) {
                 if (status) {
-                    eventsManager.changeLevelAction(() => {
+                    popupsEvents.changeLevelAction(() => {
                         setQuestionInfoToUI();
                         restoreButtonsState();
                         databaseOperations();
                     });
                 } else {
-                    eventsManager.gameLostAction(true);
+                    popupsEvents.gameLostAction(true);
                 }
             }
             yield return new WaitForSeconds(0.5f);

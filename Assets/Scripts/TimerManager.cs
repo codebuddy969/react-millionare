@@ -17,6 +17,7 @@ public class TimerManager : MonoBehaviour
     TextMeshProUGUI o_countdown = null;
 
     EventsManager eventsManager;
+    PopupsEvents popupsEvents;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +42,7 @@ public class TimerManager : MonoBehaviour
 
         if (countdown == 30 && active) {
             active = false;
-            eventsManager.gameLostAction(true);
+            popupsEvents.gameLostAction(true);
         }
     }
 

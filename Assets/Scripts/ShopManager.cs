@@ -9,8 +9,6 @@ public class ShopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventsManager.current.onShopPopupAction += popup;
-
         GameDataConfig gameDataConfig = DatabaseManager.manager.LoadSaving();
 
         gameObject.transform.Find("Title/Score").GetComponent<TextMeshProUGUI>().text = (gameDataConfig.score).ToString();
