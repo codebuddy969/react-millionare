@@ -15,61 +15,6 @@ public class EventsManager : MonoBehaviour
 
     //----------------------------------------------------
 
-    // public event Action<bool> onOptionsPopupAction;
-    // public void optionsPopupAction(bool parameter)
-    // {
-    //     if (onOptionsPopupAction != null)
-    //     {
-    //         onOptionsPopupAction(parameter);
-    //     }
-    // }
-
-    //----------------------------------------------------
-
-    // public event Action<Hashtable, Action> onShopPopupAction;
-    // public void shopPopupAction(Hashtable parameters, Action callback)
-    // {
-    //     if (onShopPopupAction != null)
-    //     {
-    //         onShopPopupAction(parameters, callback);
-    //     }
-    // }
-
-    //----------------------------------------------------
-
-    // public event Action<bool> onConfirmationPopupAction;
-    // public void confirmationPopupAction(bool parameter)
-    // {
-    //     if (onConfirmationPopupAction != null)
-    //     {
-    //         onConfirmationPopupAction(parameter);
-    //     }
-    // }
-
-    //----------------------------------------------------
-
-    public event Action<Hashtable, Action> onLevelsAction;
-    public void levelsAction(Hashtable parameters, Action callback)
-    {
-        if (onLevelsAction != null)
-        {
-            onLevelsAction(parameters, callback);
-        }
-    }
-
-    //----------------------------------------------------
-
-    public event Action<Hashtable, Action> onPopupAction;
-    public void popupAction(Hashtable parameters, Action callback)
-    {
-        if (onPopupAction != null)
-        {
-            onPopupAction(parameters, callback);
-        }
-    }
-
-    //----------------------------------------------------
-
     public event Action<float> onChangeMusicVolumeAction;
     public void changeMusicVolumeAction(float parameter)
     {
@@ -92,19 +37,8 @@ public class EventsManager : MonoBehaviour
 
     //----------------------------------------------------
 
-    // public event Action<Action> onChangeLevelAction;
-    // public void changeLevelAction(Action parameter)
-    // {
-    //     if (onChangeLevelAction != null)
-    //     {
-    //         onChangeLevelAction(parameter);
-    //     }
-    // }
-
-    //----------------------------------------------------
-
-    public event Action<GameObject> onSelectAnswerAction;
-    public void selectAnswerAction(GameObject parameter)
+    public event Action<string> onSelectAnswerAction;
+    public void selectAnswerAction(string parameter)
     {
         if (onSelectAnswerAction != null)
         {
@@ -114,23 +48,23 @@ public class EventsManager : MonoBehaviour
 
     //----------------------------------------------------
 
-    // public event Action<bool> onGameLostAction;
-    // public void gameLostAction(bool parameter)
-    // {
-    //     if (onGameLostAction != null)
-    //     {
-    //         onGameLostAction(parameter);
-    //     }
-    // }
-
-    //----------------------------------------------------
-
     public event Action<bool, bool> onChangeTimerAction;
     public void changeTimerAction(bool parameter, bool refresh)
     {
         if (onChangeTimerAction != null)
         {
             onChangeTimerAction(parameter, refresh);
+        }
+    }
+    
+    //----------------------------------------------------
+
+    public event Action<string> onClueSelectionAction;
+    public void clueSelectionAction(string parameter)
+    {
+        if (onClueSelectionAction != null)
+        {
+            onClueSelectionAction(parameter);
         }
     }
 }

@@ -4,11 +4,6 @@ using System.Collections;
 
 public class PopupsEvents
 {
-    public void Test()
-    {
-        Debug.Log("Fuck");
-    }
-
     public event Action<bool> onGameLostAction;
     public void gameLostAction(bool parameter)
     {
@@ -59,6 +54,28 @@ public class PopupsEvents
         if (onShopPopupAction != null)
         {
             onShopPopupAction(parameter);
+        }
+    }
+
+    //----------------------------------------------------
+
+    public event Action<bool> onLevelsSlideAction;
+    public void levelsSlideAction(bool parameter)
+    {
+        if (onLevelsSlideAction != null)
+        {
+            onLevelsSlideAction(parameter);
+        }
+    }
+
+    //----------------------------------------------------
+
+    public event Action<bool, Action> onAudiencePopupAction;
+    public void audiencePopupAction(bool parameter, Action callback = null)
+    {
+        if (onAudiencePopupAction != null)
+        {
+            onAudiencePopupAction(parameter, callback);
         }
     }
 }

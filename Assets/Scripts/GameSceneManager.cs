@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameMenuManager : MonoBehaviour
+public class GameSceneManager : MonoBehaviour
 {
     EventsManager eventsManager;
     PopupsEvents popupsEvents;
@@ -56,13 +56,9 @@ public class GameMenuManager : MonoBehaviour
         popupsEvents.confirmationPopupAction(status);
     }
 
-    public void Levels(bool status)
+    public void onLevelsOpen(bool status)
     {
-        Hashtable parameters = new Hashtable();
-
-        parameters["opened"] = status;
-
-        eventsManager.levelsAction(parameters, () => {  });
+        popupsEvents.levelsSlideAction(status);
     }
 
     public void musicVolume(float value)
@@ -75,13 +71,18 @@ public class GameMenuManager : MonoBehaviour
         eventsManager.changeFxVolumeAction(value);
     }
 
-    public void selectAnswer(GameObject button)
+    public void selectAnswer(string name)
     {
-        eventsManager.selectAnswerAction(button);
+        eventsManager.selectAnswerAction(name);
     }
 
-    public void onCluesClick()
+    public void onClueClick(string name)
     {
+        eventsManager.clueSelectionAction(name);
+    }
 
+    public void audiencePopup()
+    {
+        popupsEvents.audiencePopupAction(false);
     }
 }

@@ -23,6 +23,7 @@ public class TimerManager : MonoBehaviour
     void Start()
     {
         eventsManager = EventsManager.current;
+        popupsEvents = EventsManager.popupsEvents;
 
         eventsManager.onChangeTimerAction += modifyTimer;
 

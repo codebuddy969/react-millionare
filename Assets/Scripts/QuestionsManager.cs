@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -60,13 +61,12 @@ public class QuestionsManager : MonoBehaviour
 
     DatabaseManager databaseManager;
 
+    public GameObject document;
     public TextAsset questionsFile;
-
-    public TextMeshProUGUI[] UITexts;
 
     public Sprite[] backgroundSprites;
 
-    public Button[] buttons;
+    UIList interfaces;
 
     Question[] question = new Question[16];
 
@@ -76,10 +76,19 @@ public class QuestionsManager : MonoBehaviour
     void Start()
     {
         eventsManager = EventsManager.current;
-
         databaseManager = DatabaseManager.manager;
+        popupsEvents = EventsManager.popupsEvents;
+
+        interfaces = new UIList(document);
 
         eventsManager.onSelectAnswerAction += selectAnswer;
+        eventsManager.onClueSelectionAction += clueClick;
+
+        GameDataConfig gameDataConfig = databaseManager.LoadSaving();
+
+        gameDataConfig.level = 0;
+
+        databaseManager.CreateSaving(gameDataConfig);
 
         storeQuestionsInMemory();
         setQuestionInfoToUI();
@@ -109,28 +118,74 @@ public class QuestionsManager : MonoBehaviour
         }
     }
 
-    void selectAnswer(GameObject button) 
+    void selectAnswer(string name) 
     {
-        button.GetComponent<Image>().sprite = backgroundSprites[1];
+        string selectedAnswer = null;
+
+        Transform correctButton = null;
 
         eventsManager.changeTimerAction(false, false);
 
-        for (int i = 0; i <= buttons.Length - 1; i++) 
+        for (int i = 0; i <= interfaces.buttonsList.Length - 1; i++) 
         {
-            buttons[i].GetComponent<Button>().interactable = false;
-
-            if (buttons[i].name == answer) {
-                StartCoroutine(awaitOnSelection(buttons[i].transform.gameObject, button.name == answer));
-            }
+            interfaces.buttonsList[i].GetComponent<Button>().interactable = false;
         }
+
+        for (int i = 0; i <= interfaces.cluesList.Length - 1; i++) 
+        {
+            interfaces.cluesList[i].GetComponent<Button>().interactable = false;
+        }
+
+        switch (name)
+        {
+            case "first":
+                selectedAnswer = "1";
+                interfaces.first_button.GetComponent<Image>().sprite = backgroundSprites[2];
+                break;
+            case "second":
+                selectedAnswer = "2"; 
+                interfaces.second_button.GetComponent<Image>().sprite = backgroundSprites[2];
+                break;
+            case "third":
+                selectedAnswer = "3"; 
+                interfaces.third_button.GetComponent<Image>().sprite = backgroundSprites[2];
+                break;
+            case "fourth":
+                selectedAnswer = "4"; 
+                interfaces.fourth_button.GetComponent<Image>().sprite = backgroundSprites[2];
+                break;
+        }
+
+        switch (answer)
+        {
+            case "1":
+                correctButton = interfaces.first_button;
+                break;
+            case "2":
+                correctButton = interfaces.second_button;
+                break;
+            case "3":
+                correctButton = interfaces.third_button;
+                break;
+            case "4":
+                correctButton = interfaces.fourth_button;
+                break;
+        }
+
+        StartCoroutine(awaitOnSelection(correctButton, selectedAnswer == answer));
     }
 
     void restoreButtonsState()
     {
-        for (int i = 0; i <= buttons.Length - 1; i++) 
+        for (int i = 0; i <= interfaces.buttonsList.Length - 1; i++) 
         {
-            buttons[i].GetComponent<Button>().interactable = true;
-            buttons[i].GetComponent<Image>().sprite = backgroundSprites[2];
+            interfaces.buttonsList[i].GetComponent<Button>().interactable = true;
+            interfaces.buttonsList[i].GetComponent<Image>().sprite = backgroundSprites[0];
+        }
+
+        for (int i = 0; i <= interfaces.cluesList.Length - 1; i++) 
+        {
+            interfaces.cluesList[i].GetComponent<Button>().interactable = true;
         }
     }
 
@@ -139,15 +194,15 @@ public class QuestionsManager : MonoBehaviour
         GameDataConfig gameDataConfig = databaseManager.LoadSaving();
 
         answer = question[gameDataConfig.level].answer;
-        
-        UITexts[0].GetComponent<TextMeshProUGUI>().text = question[gameDataConfig.level].question;
-        UITexts[1].GetComponent<TextMeshProUGUI>().text = question[gameDataConfig.level].first;
-        UITexts[2].GetComponent<TextMeshProUGUI>().text = question[gameDataConfig.level].second;
-        UITexts[3].GetComponent<TextMeshProUGUI>().text = question[gameDataConfig.level].third;
-        UITexts[4].GetComponent<TextMeshProUGUI>().text = question[gameDataConfig.level].fourth;
+
+        interfaces.question.text = question[gameDataConfig.level].question;
+        interfaces.first_text.text = question[gameDataConfig.level].first;
+        interfaces.second_text.text = question[gameDataConfig.level].second;
+        interfaces.third_text.text = question[gameDataConfig.level].third;
+        interfaces.fourth_text.text = question[gameDataConfig.level].fourth;
     }
 
-    void databaseOperations()
+    void incrementLevel()
     {
         GameDataConfig gameDataConfig = databaseManager.LoadSaving();
 
@@ -157,27 +212,126 @@ public class QuestionsManager : MonoBehaviour
         databaseManager.CreateSaving(gameDataConfig);
     }
 
-    public IEnumerator awaitOnSelection(GameObject button, bool status)
+    void clue50on50()
+    {
+        restoreButtonsState();
+
+        int[ ] indexes = {0, 1, 2, 3};
+
+        indexes = indexes.Where((source, index) => index != (int.Parse(answer) - 1)).ToArray();
+
+        int random = indexes[Random.Range(0, 3)];
+
+        foreach(int i in indexes) {
+            if (i != random) {
+                interfaces.buttonsList[i].GetComponent<Button>().interactable = false;
+                interfaces.buttonsList[i].GetComponent<Image>().sprite = backgroundSprites[3];
+            }
+        }
+    }
+    
+    void clueClick(string name)
+    {
+        switch (name)
+        {
+            case "50on50":
+                clue50on50();
+                break;
+            case "audience":
+                popupsEvents.audiencePopupAction(true, () => {
+                    StartCoroutine(audienceSimulation());
+                });
+                break;
+            case "ad":
+
+                break;
+        }
+    }
+    
+    public IEnumerator awaitOnSelection(Transform button, bool status)
     {
         yield return new WaitForSeconds(5.5f);
         StartCoroutine(HighlightCorrectAnswer(button, status));
     }
 
-    public IEnumerator HighlightCorrectAnswer(GameObject button, bool status)
+    public IEnumerator HighlightCorrectAnswer(Transform button, bool status)
     {
         for (int i = 0; i <= 5; i++) {
             button.GetComponent<Image>().sprite = backgroundSprites[i % 2 == 0 ? 1 : 0];
             if (i == 5) {
                 if (status) {
                     popupsEvents.changeLevelAction(() => {
-                        setQuestionInfoToUI();
+                        incrementLevel();
                         restoreButtonsState();
-                        databaseOperations();
+                        setQuestionInfoToUI();
                     });
                 } else {
                     popupsEvents.gameLostAction(true);
                 }
             }
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    public IEnumerator audienceSimulation()
+    {
+        int iterations = Random.Range(4, 7);
+
+        bool condition = (int)Random.Range(1, 5) == int.Parse(answer);
+
+        for (int i = 0; i <= iterations; i++) {
+
+            float amount = 1.0f;
+
+            float first = Random.Range(0, amount);
+
+            amount = amount - first;
+
+            float second = Random.Range(0, amount);
+
+            amount = amount - second;
+
+            float third = Random.Range(0, amount);
+
+            amount = amount - third;
+
+            if (condition && i == iterations) {
+                switch (answer)
+                {
+                    case "1":
+                        first = Random.Range(0.7f, 1.0f);
+                        second = Random.Range(0, 0.3f);
+                        third = Random.Range(0, 0.3f);
+                        amount = Random.Range(0, 0.3f);
+                        break;
+                    case "2":
+                        first = Random.Range(0, 0.3f);
+                        second = Random.Range(0.7f, 1.0f);
+                        third = Random.Range(0, 0.3f);
+                        amount = Random.Range(0, 0.3f);
+                        break;
+                    case "3":
+                        first = Random.Range(0, 0.3f);
+                        second = Random.Range(0, 0.3f);
+                        third = Random.Range(0.7f, 1.0f);
+                        amount = Random.Range(0, 0.3f);
+                        break;
+                    case "4":
+                        first = Random.Range(0, 0.3f);
+                        second = Random.Range(0, 0.3f);
+                        third = Random.Range(0, 0.3f);
+                        amount = Random.Range(0.7f, 1.0f);
+                        break;
+                }
+            }
+
+            float[ ] random = {first, second, third, amount};
+
+            for (int j = 0; j <= interfaces.slidersList.Length - 1; j++) 
+            {
+                interfaces.slidersList[j].GetComponent<Slider>().DOValue(random[j], 0.5f);
+            }
+
             yield return new WaitForSeconds(0.5f);
         }
     }

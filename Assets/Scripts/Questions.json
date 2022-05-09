@@ -2,7 +2,7 @@
     "easy":
     [
         {
-            "question": "Why is there a need for using keys in Lists? - easy",
+            "question": "Why is there a need for using keys in Lists? - easy1",
             "answer": "3",
             "first": "Used for storing array indexes or id's",
             "second": "Required in React's map method",
@@ -10,7 +10,7 @@
             "fourth": "Manage elements rendering order"
         },
         {
-            "question": "Why is there a need for using keys in Lists? - easy",
+            "question": "Why is there a need for using keys in Lists? - easy2",
             "answer": "3",
             "first": "Used for storing array indexes or id's",
             "second": "Required in React's map method",
@@ -18,7 +18,7 @@
             "fourth": "Manage elements rendering order"
         },
         {
-            "question": "Why is there a need for using keys in Lists? - easy",
+            "question": "Why is there a need for using keys in Lists? - easy3",
             "answer": "3",
             "first": "Used for storing array indexes or id's",
             "second": "Required in React's map method",
@@ -26,7 +26,7 @@
             "fourth": "Manage elements rendering order"
         },
         {
-            "question": "Why is there a need for using keys in Lists? - easy",
+            "question": "Why is there a need for using keys in Lists? - easy4",
             "answer": "3",
             "first": "Used for storing array indexes or id's",
             "second": "Required in React's map method",
@@ -37,7 +37,7 @@
     "medium":
     [
         {
-            "question": "Why is there a need for using keys in Lists? - medium",
+            "question": "Why is there a need for using keys in Lists? - medium1",
             "answer": "3",
             "first": "Used for storing array indexes or id's",
             "second": "Required in React's map method",
@@ -45,7 +45,7 @@
             "fourth": "Manage elements rendering order"
         },
         {
-            "question": "Why is there a need for using keys in Lists? - medium",
+            "question": "Why is there a need for using keys in Lists? - medium2",
             "answer": "3",
             "first": "Used for storing array indexes or id's",
             "second": "Required in React's map method",
@@ -53,7 +53,7 @@
             "fourth": "Manage elements rendering order"
         },
         {
-            "question": "Why is there a need for using keys in Lists? - medium",
+            "question": "Why is there a need for using keys in Lists? - medium3",
             "answer": "3",
             "first": "Used for storing array indexes or id's",
             "second": "Required in React's map method",
@@ -61,7 +61,7 @@
             "fourth": "Manage elements rendering order"
         },
         {
-            "question": "Why is there a need for using keys in Lists? - medium",
+            "question": "Why is there a need for using keys in Lists? - medium4",
             "answer": "3",
             "first": "Used for storing array indexes or id's",
             "second": "Required in React's map method",
