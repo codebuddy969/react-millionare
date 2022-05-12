@@ -18,17 +18,21 @@ public class TimerManager : MonoBehaviour
 
     EventsManager eventsManager;
     PopupsEvents popupsEvents;
+    AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
     {
         eventsManager = EventsManager.current;
         popupsEvents = EventsManager.popupsEvents;
+        audioManager = AudioManager.manager;
 
         eventsManager.onChangeTimerAction += modifyTimer;
 
         o_circle = gameObject.transform.Find("Circle").GetComponent<Image>();
         o_countdown = gameObject.transform.Find("Countdown").GetComponent<TextMeshProUGUI>();
+
+        audioManager.Play("countdown");
     }
 
     // Update is called once per frame
@@ -43,6 +47,7 @@ public class TimerManager : MonoBehaviour
 
         if (countdown == 30 && active) {
             active = false;
+            audioManager.StopAndPlay(new string[] {"countdown"}, new string[] {"countdown-end"});
             popupsEvents.gameLostAction(true);
         }
     }

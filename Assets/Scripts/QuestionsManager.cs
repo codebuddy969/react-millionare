@@ -61,6 +61,8 @@ public class QuestionsManager : MonoBehaviour
 
     DatabaseManager databaseManager;
 
+    AudioManager audioManager;
+
     public GameObject document;
     public TextAsset questionsFile;
 
@@ -78,6 +80,7 @@ public class QuestionsManager : MonoBehaviour
         eventsManager = EventsManager.current;
         databaseManager = DatabaseManager.manager;
         popupsEvents = EventsManager.popupsEvents;
+        audioManager = AudioManager.manager;
 
         interfaces = new UIList(document);
 
@@ -125,6 +128,8 @@ public class QuestionsManager : MonoBehaviour
         Transform correctButton = null;
 
         eventsManager.changeTimerAction(false, false);
+
+        audioManager.StopAndPlay(new string[] {"countdown"}, new string[] {"select-answer"});
 
         for (int i = 0; i <= interfaces.buttonsList.Length - 1; i++) 
         {
@@ -216,6 +221,8 @@ public class QuestionsManager : MonoBehaviour
     {
         restoreButtonsState();
 
+        audioManager.Play("50on50");
+
         int[ ] indexes = {0, 1, 2, 3};
 
         indexes = indexes.Where((source, index) => index != (int.Parse(answer) - 1)).ToArray();
@@ -256,6 +263,8 @@ public class QuestionsManager : MonoBehaviour
 
     public IEnumerator HighlightCorrectAnswer(Transform button, bool status)
     {
+        audioManager.StopAndPlay(new string[] {"select-answer"}, new string[] {status ? "correct-answer" : "wrong-answer"});
+
         for (int i = 0; i <= 5; i++) {
             button.GetComponent<Image>().sprite = backgroundSprites[i % 2 == 0 ? 1 : 0];
             if (i == 5) {
@@ -278,6 +287,8 @@ public class QuestionsManager : MonoBehaviour
         int iterations = Random.Range(4, 7);
 
         bool condition = (int)Random.Range(1, 5) == int.Parse(answer);
+
+        audioManager.StopAndPlay(new string[] {"countdown"}, new string[] {"audience-thinking"});
 
         for (int i = 0; i <= iterations; i++) {
 
@@ -323,6 +334,10 @@ public class QuestionsManager : MonoBehaviour
                         amount = Random.Range(0.7f, 1.0f);
                         break;
                 }
+            }
+
+            if (i == iterations) {
+                audioManager.StopAndPlay(new string[] {"audience-thinking"}, new string[] {"audience-selected"});
             }
 
             float[ ] random = {first, second, third, amount};

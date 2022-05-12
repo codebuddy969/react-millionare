@@ -9,6 +9,7 @@ public class GameSceneManager : MonoBehaviour
     EventsManager eventsManager;
     PopupsEvents popupsEvents;
     DatabaseManager databaseManager;
+    AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,7 @@ public class GameSceneManager : MonoBehaviour
         eventsManager = EventsManager.current;
         popupsEvents = EventsManager.popupsEvents;
         databaseManager = DatabaseManager.manager;
+        audioManager = AudioManager.manager;
     }
 
     public void leaveGameSession(bool saving)
@@ -31,6 +33,8 @@ public class GameSceneManager : MonoBehaviour
 
         databaseManager.CreateSaving(gameDataConfig);
 
+        audioManager.Stop("countdown");
+
         SceneManager.LoadScene("Menu");
     }
 
@@ -42,6 +46,8 @@ public class GameSceneManager : MonoBehaviour
         gameDataConfig.session_score = 0;
 
         databaseManager.CreateSaving(gameDataConfig);
+
+        audioManager.Stop("countdown");
 
         SceneManager.LoadScene("Game");
     }
@@ -83,6 +89,8 @@ public class GameSceneManager : MonoBehaviour
 
     public void audiencePopup()
     {
+        audioManager.Play("countdown");
+        
         popupsEvents.audiencePopupAction(false);
     }
 }

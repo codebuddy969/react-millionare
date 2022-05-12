@@ -3599,6 +3599,7 @@ GameObject:
   - component: {fileID: 424134207}
   - component: {fileID: 424134206}
   - component: {fileID: 424134202}
+  - component: {fileID: 424134208}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -3701,6 +3702,96 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8383bd3be70c14b8aac3615956ccda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &424134208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424134199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6279c9b03f3472b49bb1fc403d3adaf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: click
+    clip: {fileID: 8300000, guid: e7785e125c00d2448b30cd10ba24ee9f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 0
+    source: {fileID: 0}
+  - name: countdown
+    clip: {fileID: 8300000, guid: 0c17b5adfd091ad42992c3826e99de72, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    music: 0
+    source: {fileID: 0}
+  - name: countdown-end
+    clip: {fileID: 8300000, guid: 1d81118ed9627fe4b9445acf48a06aa1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 0
+    source: {fileID: 0}
+  - name: audience-thinking
+    clip: {fileID: 8300000, guid: 4d86219d720ad1f4195b2e1282881f1c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    music: 0
+    source: {fileID: 0}
+  - name: audience-selected
+    clip: {fileID: 8300000, guid: c54b15c08e616e042b7268d6ec630493, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 0
+    source: {fileID: 0}
+  - name: menu-1
+    clip: {fileID: 8300000, guid: 1d8fd2d6827b8264ba4d028ab679076a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 1
+    source: {fileID: 0}
+  - name: menu-2
+    clip: {fileID: 8300000, guid: 60239edaabd10bd4c84338ac3b47471c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 1
+    source: {fileID: 0}
+  - name: 50on50
+    clip: {fileID: 8300000, guid: 98bfa8c40a70482439d8df4522751ea1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 0
+    source: {fileID: 0}
+  - name: select-answer
+    clip: {fileID: 8300000, guid: d5575eb8c1b156c43970861377ba5955, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 0
+    source: {fileID: 0}
+  - name: wrong-answer
+    clip: {fileID: 8300000, guid: 6296e76b68504ec4db1343f08cfb9035, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 0
+    source: {fileID: 0}
+  - name: correct-answer
+    clip: {fileID: 8300000, guid: 447fce5b445536242a5da1fb95cf96cc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    music: 0
+    source: {fileID: 0}
 --- !u!1 &427038115
 GameObject:
   m_ObjectHideFlags: 0
