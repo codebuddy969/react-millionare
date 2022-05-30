@@ -93,4 +93,9 @@ public class GameSceneManager : MonoBehaviour
         
         popupsEvents.audiencePopupAction(false);
     }
+
+    public void achievementPopup()
+    {
+        popupsEvents.achievementPopupAction(false, "");
+    }
 }

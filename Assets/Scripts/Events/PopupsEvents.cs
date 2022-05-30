@@ -78,4 +78,15 @@ public class PopupsEvents
             onAudiencePopupAction(parameter, callback);
         }
     }
+
+    //----------------------------------------------------
+
+    public event Action<bool, string> onAchievementPopupAction;
+    public void achievementPopupAction(bool parameter, string amount)
+    {
+        if (onAchievementPopupAction != null)
+        {
+            onAchievementPopupAction(parameter, amount);
+        }
+    }
 }

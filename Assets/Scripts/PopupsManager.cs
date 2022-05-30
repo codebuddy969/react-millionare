@@ -13,6 +13,7 @@ public class PopupsManager : MonoBehaviour
     EventsManager eventsManager;
     PopupsEvents popupsEvents;
     DatabaseManager databaseManager;
+    AudioManager audioManager;
 
     public PopupsList[] popupsList;
  
@@ -21,6 +22,7 @@ public class PopupsManager : MonoBehaviour
         eventsManager = EventsManager.current;
         popupsEvents = EventsManager.popupsEvents;
         databaseManager = DatabaseManager.manager;
+        audioManager = AudioManager.manager;
 
         foreach (PopupsList popup in popupsList)
         {
@@ -46,6 +48,9 @@ public class PopupsManager : MonoBehaviour
                     break;
                 case "Audience":
                     popupsEvents.onAudiencePopupAction += (p, callback) => onAudienceOpen(p, callback, popup.Element);
+                    break;
+                case "Achievement":
+                    popupsEvents.onAchievementPopupAction += (p, amount) => onAchievementOpen(p, amount, popup.Element);
                     break;
             }
         }
@@ -81,11 +86,16 @@ public class PopupsManager : MonoBehaviour
                      .SetEase(Ease.OutBack)
                      .SetDelay(1)
                      .OnComplete(() => {
+                         audioManager.Play("switch-level");
                          StartCoroutine(CircleFill(circle, 5, () => {
                              callback?.Invoke();
-                             element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetDelay(2).OnComplete(() => {
+                             element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).SetDelay(4).OnComplete(() => {
                                 eventsManager.changeTimerAction(true, true);
                                 element.SetActive(false);
+                                audioManager.Play("countdown");
+                                if (gameDataConfig.level == 4 || gameDataConfig.level == 9) {
+                                    popupsEvents.achievementPopupAction(true, gameDataConfig.level == 4 ? "1000" : "32000");
+                                }
                              });
                          }));
                     });
@@ -146,6 +156,19 @@ public class PopupsManager : MonoBehaviour
                    .OnComplete(() => {
                         callback?.Invoke();
                    });
+        } else {
+            element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { element.SetActive(false); });
+        }
+    }
+
+    void onAchievementOpen(bool status, string amount, GameObject element)
+    {
+        if (status) {
+            element.SetActive(true);
+            element.transform.Find("Notification").GetComponent<TextMeshProUGUI>().text = $"Safety {amount} achieved";
+            element.transform
+                   .DOScale(new Vector3(1, 1, 1), 0.2f)
+                   .SetEase(Ease.OutBack);
         } else {
             element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { element.SetActive(false); });
         }

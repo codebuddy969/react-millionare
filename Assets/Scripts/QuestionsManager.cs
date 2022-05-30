@@ -94,7 +94,8 @@ public class QuestionsManager : MonoBehaviour
         databaseManager.CreateSaving(gameDataConfig);
 
         storeQuestionsInMemory();
-        setQuestionInfoToUI();
+
+        setQuestionInfoToUI(gameDataConfig);
     }
 
     void storeQuestionsInMemory()
@@ -194,10 +195,8 @@ public class QuestionsManager : MonoBehaviour
         }
     }
 
-    void setQuestionInfoToUI()
+    void setQuestionInfoToUI(GameDataConfig gameDataConfig)
     {
-        GameDataConfig gameDataConfig = databaseManager.LoadSaving();
-
         answer = question[gameDataConfig.level].answer;
 
         interfaces.question.text = question[gameDataConfig.level].question;
@@ -207,7 +206,7 @@ public class QuestionsManager : MonoBehaviour
         interfaces.fourth_text.text = question[gameDataConfig.level].fourth;
     }
 
-    void incrementLevel()
+    GameDataConfig incrementLevel()
     {
         GameDataConfig gameDataConfig = databaseManager.LoadSaving();
 
@@ -215,6 +214,8 @@ public class QuestionsManager : MonoBehaviour
         gameDataConfig.level = gameDataConfig.level + 1;
 
         databaseManager.CreateSaving(gameDataConfig);
+
+        return gameDataConfig;
     }
 
     void clue50on50()
@@ -257,7 +258,7 @@ public class QuestionsManager : MonoBehaviour
     
     public IEnumerator awaitOnSelection(Transform button, bool status)
     {
-        yield return new WaitForSeconds(5.5f);
+        yield return new WaitForSeconds(9.5f);
         StartCoroutine(HighlightCorrectAnswer(button, status));
     }
 
@@ -270,9 +271,10 @@ public class QuestionsManager : MonoBehaviour
             if (i == 5) {
                 if (status) {
                     popupsEvents.changeLevelAction(() => {
-                        incrementLevel();
+                        GameDataConfig gameDataConfig = incrementLevel();
+
                         restoreButtonsState();
-                        setQuestionInfoToUI();
+                        setQuestionInfoToUI(gameDataConfig);
                     });
                 } else {
                     popupsEvents.gameLostAction(true);
