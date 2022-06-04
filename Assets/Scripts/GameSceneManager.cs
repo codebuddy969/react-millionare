@@ -11,7 +11,6 @@ public class GameSceneManager : MonoBehaviour
     DatabaseManager databaseManager;
     AudioManager audioManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         eventsManager = EventsManager.current;
@@ -42,6 +41,14 @@ public class GameSceneManager : MonoBehaviour
     {
         GameDataConfig gameDataConfig = databaseManager.LoadSaving();
 
+        if (gameDataConfig.session_score >= 1000 && gameDataConfig.session_score < 32000) {
+            gameDataConfig.score = gameDataConfig.score + 1000;
+        }
+
+        if (gameDataConfig.session_score >= 32000) {
+            gameDataConfig.score = gameDataConfig.score + 32000;
+        }
+
         gameDataConfig.level = 0;
         gameDataConfig.session_score = 0;
 
@@ -69,12 +76,12 @@ public class GameSceneManager : MonoBehaviour
 
     public void musicVolume(float value)
     { 
-        eventsManager.changeMusicVolumeAction(value);
+        audioManager.musicVolume(value);
     }
 
     public void fxVolume(float value)
     { 
-        eventsManager.changeFxVolumeAction(value);
+        audioManager.effectsVolume(value);
     }
 
     public void selectAnswer(string name)

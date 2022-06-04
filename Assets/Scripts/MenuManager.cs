@@ -52,13 +52,11 @@ public class MenuManager : MonoBehaviour
 
     public void musicVolume(float value)
     { 
-        eventsManager.changeMusicVolumeAction(value);
-
-        // audioManager.MusicVolumeControl(value / 3);
+        audioManager.musicVolume(value);
     }
 
     public void fxVolume(float value)
     { 
-        eventsManager.changeFxVolumeAction(value);
+        audioManager.effectsVolume(value);
     }
 }

@@ -2,13 +2,19 @@ using UnityEngine.Audio;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    private GameDataConfig saving;
+    public GameObject document;
 
     public SoundsList[] sounds;
+
+    DatabaseManager databaseManager;
+
+    UIList interfaces;
+
+    GameDataConfig gameDataConfig;
     
     public static AudioManager manager;
     void Awake()
@@ -36,10 +42,14 @@ public class AudioManager : MonoBehaviour
 
     public void Start()
     {
-        // saving = DatabaseManager.element.LoadSaving();
+        interfaces = new UIList(document, SceneManager.GetActiveScene().name == "Game");
 
-        // MusicVolumeControl(saving.musicLevel / 3);
-        // EffectsVolumeControl(saving.effectsLevel / 3);
+        databaseManager = DatabaseManager.manager;
+
+        gameDataConfig = databaseManager.LoadSaving();
+
+        musicVolume(gameDataConfig.musicVolume);
+        effectsVolume(gameDataConfig.effectsVolume);
     }
 
     public void Play(string name)
@@ -92,26 +102,38 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void MusicVolumeControl(float volume)
+    public void musicVolume(float volume)
     {
-        // foreach (Sound s in sounds)
-        // {
-        //     if (s.music)
-        //     {
-        //         s.source.volume = volume;
-        //     }
-        // }
+        foreach (SoundsList s in sounds)
+        {
+            if (s.music)
+            {
+                s.source.volume = (float)(volume / 3);
+            }
+        }
+
+        interfaces.musicSlider.GetComponent<Slider>().value = volume;
+
+        gameDataConfig.musicVolume = volume;
+
+        databaseManager.CreateSaving(gameDataConfig);
     }
 
-    public void EffectsVolumeControl(float volume)
+    public void effectsVolume(float volume)
     {
-        // foreach (Sound s in sounds)
-        // {
-        //     if (!s.music)
-        //     {
-        //         s.source.volume = volume;
-        //     }
-        // }
+        foreach (SoundsList s in sounds)
+        {
+            if (!s.music)
+            {
+                s.source.volume = (float)(volume / 3);
+            }
+        }
+
+        interfaces.effectsSlider.GetComponent<Slider>().value = volume;
+
+        gameDataConfig.effectsVolume = volume;
+
+        databaseManager.CreateSaving(gameDataConfig);
     }
 
     public void PlayRandomTrack()
