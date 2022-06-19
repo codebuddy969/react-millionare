@@ -6,11 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    public GameObject document;
-
     public SoundsList[] sounds;
 
     DatabaseManager databaseManager;
+    HelperEvents helperEvents;
 
     UIList interfaces;
 
@@ -38,13 +37,14 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
+
+        databaseManager = DatabaseManager.manager;
+        helperEvents = EventsManager.helperEvents;
     }
 
     public void Start()
     {
-        interfaces = new UIList(document, SceneManager.GetActiveScene().name == "Game");
-
-        databaseManager = DatabaseManager.manager;
+        interfaces = helperEvents.interfaceList;
 
         gameDataConfig = databaseManager.LoadSaving();
 

@@ -52,6 +52,12 @@ public class PopupsManager : MonoBehaviour
                 case "Achievement":
                     popupsEvents.onAchievementPopupAction += (p, amount) => onAchievementOpen(p, amount, popup.Element);
                     break;
+                case "Game Won":
+                    popupsEvents.onGameWonAction += (p) => onGameWon(p, popup.Element);
+                    break;
+                case "Configs":
+                    popupsEvents.onConfigsPopupAction += (p) => onConfigsOpen(p, popup.Element);
+                    break;
             }
         }
     }
@@ -75,9 +81,33 @@ public class PopupsManager : MonoBehaviour
         }
     }
 
+    void onGameWon(bool status, GameObject element)
+    {
+        if (status) {
+            element.SetActive(true);
+            element.transform
+                        .DOScale(new Vector3(1, 1, 1), 0.2f)
+                        .SetEase(Ease.OutBack)
+                        .OnComplete(() => {
+
+                        });
+        } else {
+            element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { 
+                element.SetActive(false); 
+            });
+        }
+    }
+
     void onChangeLevel(Action callback, GameObject element)
     {
         GameDataConfig gameDataConfig = DatabaseManager.manager.LoadSaving();
+
+        if (gameDataConfig.level == 14) {
+            audioManager.Play("game-won");
+            popupsEvents.gameWonAction(true);
+            return;
+        }
+
         Image circle = element.transform.Find("Icon/Circle").GetComponent<Image>();
 
         element.SetActive(true);
@@ -169,6 +199,21 @@ public class PopupsManager : MonoBehaviour
             element.transform
                    .DOScale(new Vector3(1, 1, 1), 0.2f)
                    .SetEase(Ease.OutBack);
+        } else {
+            element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { element.SetActive(false); });
+        }
+    }
+
+    void onConfigsOpen(bool status, GameObject element) 
+    {
+        if (status) {
+            element.SetActive(true);
+            element.transform
+                   .DOScale(new Vector3(1, 1, 1), 0.2f)
+                   .SetEase(Ease.OutBack)
+                   .OnComplete(() => {
+
+                   });
         } else {
             element.transform.DOScale(new Vector3(0, 0, 0), 0.2f).OnComplete(() => { element.SetActive(false); });
         }

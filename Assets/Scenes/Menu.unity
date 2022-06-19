@@ -1835,7 +1835,7 @@ GameObject:
   - component: {fileID: 691832156}
   - component: {fileID: 691832155}
   m_Layer: 5
-  m_Name: Effects Slider
+  m_Name: EffectsSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1912,7 +1912,7 @@ GameObject:
   - component: {fileID: 701573803}
   - component: {fileID: 701573804}
   m_Layer: 5
-  m_Name: MusicSlider
+  m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3566,7 +3566,7 @@ GameObject:
   - component: {fileID: 1171533248}
   - component: {fileID: 1171533247}
   m_Layer: 5
-  m_Name: Music Slider
+  m_Name: MusicSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3643,7 +3643,6 @@ GameObject:
   - component: {fileID: 1177881880}
   - component: {fileID: 1177881883}
   - component: {fileID: 1177881882}
-  - component: {fileID: 1177881881}
   m_Layer: 5
   m_Name: OptionsPopup
   m_TagString: Untagged
@@ -3674,18 +3673,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 720, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1177881881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177881879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48d38935307b1484dae959b01636f568, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1177881882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4025,7 +4012,7 @@ GameObject:
   - component: {fileID: 1314583344}
   - component: {fileID: 1314583345}
   m_Layer: 5
-  m_Name: EffectsSlider
+  m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4152,7 +4139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 30}
+  m_AnchoredPosition: {x: 0, y: 40}
   m_SizeDelta: {x: 340, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1372919783
@@ -4353,6 +4340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6279c9b03f3472b49bb1fc403d3adaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  document: {fileID: 606236339}
   sounds:
   - name: click
     clip: {fileID: 8300000, guid: e7785e125c00d2448b30cd10ba24ee9f, type: 3}
@@ -4511,7 +4499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 70}
+  m_AnchoredPosition: {x: 0, y: 80}
   m_SizeDelta: {x: 340, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1389009963

@@ -56,14 +56,11 @@ public class QuestionsManager : MonoBehaviour
     string answer = null;
 
     EventsManager eventsManager;
-
     PopupsEvents popupsEvents;
-
     DatabaseManager databaseManager;
-
     AudioManager audioManager;
+    HelperEvents helperEvents;
 
-    public GameObject document;
     public TextAsset questionsFile;
 
     public Sprite[] backgroundSprites;
@@ -80,9 +77,10 @@ public class QuestionsManager : MonoBehaviour
         eventsManager = EventsManager.current;
         databaseManager = DatabaseManager.manager;
         popupsEvents = EventsManager.popupsEvents;
+        helperEvents = EventsManager.helperEvents;
         audioManager = AudioManager.manager;
 
-        interfaces = new UIList(document);
+        interfaces = helperEvents.interfaceList;
 
         eventsManager.onSelectAnswerAction += selectAnswer;
         eventsManager.onClueSelectionAction += clueClick;
@@ -211,6 +209,7 @@ public class QuestionsManager : MonoBehaviour
         GameDataConfig gameDataConfig = databaseManager.LoadSaving();
 
         gameDataConfig.session_score = reward[gameDataConfig.level];
+
         gameDataConfig.level = gameDataConfig.level + 1;
 
         databaseManager.CreateSaving(gameDataConfig);

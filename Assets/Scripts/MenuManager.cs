@@ -59,4 +59,17 @@ public class MenuManager : MonoBehaviour
     { 
         audioManager.effectsVolume(value);
     }
+
+    public void clearRecords()
+    {
+        GameDataConfig gameDataConfig = databaseManager.LoadSaving();
+
+        gameDataConfig.level = 0;
+        gameDataConfig.score = 0;
+        gameDataConfig.session_score = 0;
+        gameDataConfig.clue_50on50 = 0;
+        gameDataConfig.clue_auditory = 0;
+
+        databaseManager.CreateSaving(gameDataConfig);
+    }
 }

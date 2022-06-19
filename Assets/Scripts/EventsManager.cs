@@ -4,13 +4,17 @@ using System.Collections;
 
 public class EventsManager : MonoBehaviour
 {
+    public GameObject document;
+
     public static EventsManager current;
     public static PopupsEvents popupsEvents;
+    public static HelperEvents helperEvents;
 
     private void Awake()
     {
         current = this;
         popupsEvents = new PopupsEvents();
+        helperEvents = new HelperEvents(new UIList(document));
     }
 
     //----------------------------------------------------

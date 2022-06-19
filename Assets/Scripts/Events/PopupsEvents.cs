@@ -15,6 +15,17 @@ public class PopupsEvents
 
     //----------------------------------------------------
 
+    public event Action<bool> onGameWonAction;
+    public void gameWonAction(bool parameter)
+    {
+        if (onGameWonAction != null)
+        {
+            onGameWonAction(parameter);
+        }
+    }
+
+    //----------------------------------------------------
+
     public event Action<Action> onChangeLevelAction;
     public void changeLevelAction(Action parameter)
     {
@@ -87,6 +98,17 @@ public class PopupsEvents
         if (onAchievementPopupAction != null)
         {
             onAchievementPopupAction(parameter, amount);
+        }
+    }
+
+    //----------------------------------------------------
+
+    public event Action<bool> onConfigsPopupAction;
+    public void configsPopupAction(bool parameter)
+    {
+        if (onConfigsPopupAction != null)
+        {
+            onConfigsPopupAction(parameter);
         }
     }
 }

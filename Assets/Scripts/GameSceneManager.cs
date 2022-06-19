@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ public class GameSceneManager : MonoBehaviour
     PopupsEvents popupsEvents;
     DatabaseManager databaseManager;
     AudioManager audioManager;
+    HelperEvents helperEvents;
 
     void Start()
     {
@@ -17,46 +19,46 @@ public class GameSceneManager : MonoBehaviour
         popupsEvents = EventsManager.popupsEvents;
         databaseManager = DatabaseManager.manager;
         audioManager = AudioManager.manager;
+        helperEvents = EventsManager.helperEvents;
+
+        this.onSessionLoaded();
     }
 
-    public void leaveGameSession(bool saving)
-    {
+    public void onSessionLoaded() {
+
+        UIList interfaces = helperEvents.interfaceList;
+
+
+    }
+
+    public void endGameSession(string scenario) {
+
         GameDataConfig gameDataConfig = databaseManager.LoadSaving();
-
-        if (saving) {
-            gameDataConfig.score = gameDataConfig.score + gameDataConfig.session_score;
-        }
-
-        gameDataConfig.session_score = 0;
-        gameDataConfig.level = 0;
-
-        databaseManager.CreateSaving(gameDataConfig);
 
         audioManager.Stop("countdown");
 
-        SceneManager.LoadScene("Menu");
-    }
-
-    public void reloadGameSession()
-    {
-        GameDataConfig gameDataConfig = databaseManager.LoadSaving();
-
-        if (gameDataConfig.session_score >= 1000 && gameDataConfig.session_score < 32000) {
-            gameDataConfig.score = gameDataConfig.score + 1000;
+        if (scenario == "leave" || scenario == "lost & leave" || scenario == "lost & reload") {
+            if (gameDataConfig.session_score >= 1000 && gameDataConfig.session_score < 32000) {
+                gameDataConfig.score = gameDataConfig.score + 1000;
+            }
+            if (gameDataConfig.session_score >= 32000) {
+                gameDataConfig.score = gameDataConfig.score + 32000;
+            }
         }
 
-        if (gameDataConfig.session_score >= 32000) {
-            gameDataConfig.score = gameDataConfig.score + 32000;
+        if (scenario == "won & leave" || scenario == "won & reload") {
+            gameDataConfig.score = gameDataConfig.score + 1000000;
         }
-
-        gameDataConfig.level = 0;
-        gameDataConfig.session_score = 0;
 
         databaseManager.CreateSaving(gameDataConfig);
 
-        audioManager.Stop("countdown");
+        if (scenario == "leave" || scenario == "lost & leave" || scenario == "won & leave") {
+            SceneManager.LoadScene("Menu");
+        }
 
-        SceneManager.LoadScene("Game");
+        if (scenario == "lost & reload" || scenario == "won & reload") {
+            SceneManager.LoadScene("Game");
+        }
     }
 
     public void optionsPopup(bool status)
@@ -104,5 +106,26 @@ public class GameSceneManager : MonoBehaviour
     public void achievementPopup()
     {
         popupsEvents.achievementPopupAction(false, "");
+    }
+
+    public void configsPopup(bool status)
+    {
+        popupsEvents.configsPopupAction(status);
+    }
+
+    public void storeConfig()
+    {
+        UIList interfaces = helperEvents.interfaceList;
+
+        GameDataConfig gameDataConfig = databaseManager.LoadSaving();
+
+        gameDataConfig.level = interfaces.configPopup.level.GetComponent<TMP_Dropdown>().value;
+        gameDataConfig.score = interfaces.configPopup.score.GetComponent<TMP_Dropdown>().value;
+        gameDataConfig.clue_50on50 = int.Parse(interfaces.configPopup.clue_50on50.GetComponent<InputField>().text);
+        gameDataConfig.clue_auditory = int.Parse(interfaces.configPopup.clue_auditory.GetComponent<InputField>().text);
+
+        databaseManager.CreateSaving(gameDataConfig);
+
+        this.configsPopup(false);
     }
 }

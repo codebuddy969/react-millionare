@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class UIList
@@ -28,15 +29,18 @@ public class UIList
     public Transform fourth_slider;
     public Transform musicSlider;
     public Transform effectsSlider;
+    public ConfigPopup configPopup;
 
-    public UIList(GameObject document, bool game_scene = true){
+    public UIList(GameObject document)
+    {
         musicSlider = document.transform.Find("OptionsPopup/MusicSlider/Slider");
         effectsSlider = document.transform.Find("OptionsPopup/EffectsSlider/Slider");
 
-        if (game_scene) { gameUI(document); } else { menuUI(document); }
+        if (SceneManager.GetActiveScene().name == "Game") { gameUI(document); } else { menuUI(document); }
     }
 
-    void gameUI(GameObject document) {
+    void gameUI(GameObject document) 
+    {
         question = document.transform.Find("Question/Panel/Text").GetComponent<TextMeshProUGUI>();
 
         first_button = document.transform.Find("Answers/First/Button");
@@ -62,9 +66,17 @@ public class UIList
             document.transform.Find("AudiencePopup/Sliders/Third/Slider"),
             document.transform.Find("AudiencePopup/Sliders/Fourth/Slider"),
         };
+
+        configPopup = new ConfigPopup {
+            level = document.transform.Find("ConfigsPopup/Options/level"),
+            score = document.transform.Find("ConfigsPopup/Options/score"),
+            clue_50on50 = document.transform.Find("ConfigsPopup/Options/clue_50on50"),
+            clue_auditory = document.transform.Find("ConfigsPopup/Options/clue_auditory"),
+        };
     }
 
-    void menuUI(GameObject document) {
+    void menuUI(GameObject document) 
+    {
 
     }
 }

@@ -19,8 +19,6 @@ public class CluesManager : MonoBehaviour
         popupsEvents = EventsManager.popupsEvents;
 
         interfaces = new UIList(document);
-
-        
     }
 
     void onClueClick(string name)
